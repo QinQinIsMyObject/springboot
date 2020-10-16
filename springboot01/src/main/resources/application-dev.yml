@@ -1,0 +1,9 @@
+# 开发环境的配置文件
+
+# 配置服务的端口号
+server:
+  # 默认8080
+  port: 8081
+
+spring:
+  profiles: dev

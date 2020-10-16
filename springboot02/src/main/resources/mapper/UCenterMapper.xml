@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpark.springboot02.mapper.UCenterMapper">
+
+    <select id="ucenterList" resultType="com.zpark.springboot02.entity.UCenter">
+        select *
+        from ucenter
+    </select>
+
+</mapper>
