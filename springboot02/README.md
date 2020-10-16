@@ -11,6 +11,10 @@ PostMan
 
 # 步骤
 
+需要开启STMP邮箱服务；
+
+数据库sql表在src/main/resources/sql/目录下
+
 运行成功后，打开PostMan测试发送是否成功；打开浏览器测试是否可以支付。
 
 
