@@ -1,0 +1,10 @@
+-- 创建商品表
+create table if not exists goods(
+	gid int primary key auto_increment,
+	gname varchar(20) not null,
+	gprice double default 0,
+	gnum int default 0
+);
+
+-- 加入商品
+insert into goods(gname,gprice,gnum) value ("Iphone12",79999.0,100),("海尔空调",3599.0,2000),("捷安特自行车",5299.1,50),("Macbook Pro",16999.3,100);
