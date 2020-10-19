@@ -1,0 +1,6 @@
+-- 创建用户表
+create table if not exists ucenter(
+    uid int primary key auto_increment,
+    email varchar(30) not null,
+    password varchar(20) not null
+);

@@ -58,6 +58,11 @@ public class RedisConfig {
 
     }
 
+    /**
+     * 生成json的序列化机制
+     *
+     * @return
+     */
     private Jackson2JsonRedisSerializer getJsonRedisSerializer() {
         return new Jackson2JsonRedisSerializer(Object.class);
     }

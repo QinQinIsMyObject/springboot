@@ -14,14 +14,21 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     database: 0
-    #\u6307\u4EE3\u672C\u673A\u7684redis\u7684IP
+    #指代本机的redis的IP
     host: 127.0.0.1
-    #redis\u9ED8\u8BA4\u7AEF\u53E3\u53F7
+    #redis默认端口号
     port: 6379
-    #redis\u5BC6\u7801
+    #redis密码
     #    password:
-    #\u8D85\u65F6\u65F6\u95F4\u4E3A0.2\u79D2
+    #超时时间为0.2秒
     timeout: 200
   cache:
     type: redis
-
+  mail:
+    host: mail.snapmail.cc
+    port: 25
+    username:
+    password:
+    properties:
+      mail:
+        debug: true
