@@ -22,4 +22,6 @@ spring:
     #    password:
     #\u8D85\u65F6\u65F6\u95F4\u4E3A0.2\u79D2
     timeout: 200
+  cache:
+    type: redis
 
