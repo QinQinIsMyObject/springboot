@@ -8,3 +8,5 @@ create table if not exists goods(
 
 -- 加入商品
 insert into goods(gname,gprice,gnum) value ("Iphone12",79999.0,100),("海尔空调",3599.0,2000),("捷安特自行车",5299.1,50),("Macbook Pro",16999.3,100);
+
+update goods set num = num -1 where gid = 1
