@@ -25,6 +25,7 @@ spring:
   cache:
     type: redis
   mail:
+    #使用的是临时邮件
     host: mail.snapmail.cc
     port: 25
     username:

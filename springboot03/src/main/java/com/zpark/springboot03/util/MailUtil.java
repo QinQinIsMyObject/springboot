@@ -2,6 +2,12 @@ package com.zpark.springboot03.util;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 /**
  * @author Celery
@@ -28,6 +34,40 @@ public class MailUtil {
         mailMessage.setText(content);
         //发送邮件
         javaMailSender.send(mailMessage);
+    }
+
+    /**
+     * 发送Html版本的验证码
+     *
+     * @param to             发送给谁
+     * @param verifyCode     验证码内容
+     * @param javaMailSender
+     */
+    public static void sendVerifyEmail(String to, String verifyCode, JavaMailSender javaMailSender, TemplateEngine templateEngine) {
+        //创建一个Thymeleaf的Context对象
+        Context context = new Context();
+        //设置参数
+        context.setVariable("verifyCode", verifyCode);
+        //生成一个字符串类型的内容(将模板页面和上下文对象绑定)
+        String content = templateEngine.process("verifyCodeTemplate.html", context);
+
+        //准备一个邮件信息对象
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            //从哪儿发送
+            helper.setFrom("icaods@snapmail.cc");
+            //发送给谁
+            helper.setTo(to);
+            //标题
+            helper.setSubject("验证码");
+            //内容
+            helper.setText(content,true);
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

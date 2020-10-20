@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-        <!--redis-->
+        <!--springboot之redis启动器依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -49,8 +49,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <!--thymeleaf的启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
-        <!--redis-->
+        <!--redis依赖-->
         <!--        <dependency>-->
         <!--            <groupId>redis.clients</groupId>-->
         <!--            <artifactId>jedis</artifactId>-->

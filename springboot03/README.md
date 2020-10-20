@@ -6,8 +6,6 @@
 
 
 
-
-
 # 使用临时邮箱发送临时邮件
 
 >转自[Jayden](https://www.zhihu.com/people/jayden-58-50)：https://www.zhihu.com/question/22573855/answer/1331434944
@@ -30,11 +28,43 @@ SMTP Server
 
 ![image-20201019190511737](images/image-20201019190511737.png)
 
-![image-20201019190628049](images/image-20201019190628049.png)
+![image-20201020103202161](images/image-20201020103202161.png)
 
 优势：不泄露隐私。
 
 不好之处：只能发邮件到@snapmail.cc；邮箱临时。
+
+# 发送邮件步骤
+
+启动idea，运行springboot03项目；启动redis；打开postman，出现的效果如下：
+
+![image-20201020101915298](images/image-20201020101915298.png)
+
+![image-20201020103003914](images/image-20201020103003914.png)
+
+![image-20201020102907394](images/image-20201020102907394.png)
+
+# 模板引擎
+
+旧：jsp
+
+新：Freemarker、Thymeleaf
+
+```http
+Thymeleaf官网：https://www.thymeleaf.org/
+Freemarker官网：https://freemarker.apache.org/
+Freemarker中文官网：http://www.freemarker.cn/
+```
+
+注意：这儿要使用Thymeleaf官网的网址
+
+![image-20201020104352913](images/image-20201020104352913.png)
+
+```html
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+```
+
+
 
 # 出错
 
@@ -42,13 +72,35 @@ SMTP Server
 
 > 转自[田潇文](https://me.csdn.net/weixin_44259720)：https://blog.csdn.net/weixin_44259720/article/details/105934467
 
+更新插件或指明不处理。
 
+![image-20201020105341049](images/image-20201020105341049.png)
 
+## 出现Could not autowire. No beans of 'xxx' type found
 
+网络不稳定导致依赖下载不全。
 
+例如：springboot使用redis启动器时，maven一直出错，可以试试用redis的依赖(二者只能使用其一)，网络佳时在使用redis启动器。
 
+```xml
+<!--springboot之redis启动器依赖-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
 
-
+```xml
+<!--redis依赖-->
+<dependency>
+    <groupId>redis.clients</groupId>
+    <artifactId>jedis</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-redis</artifactId>
+</dependency>
+```
 
 ## 在系统中发现多个分页插件，请检查系统配置
 
@@ -64,11 +116,17 @@ SMTP Server
 
 ![image-20201019160743867](images/image-20201019160743867.png)
 
+## 解决发送HTML模板邮件显示源码、样式不全的问题
 
+![image-20201020101900351](images/image-20201020101900351.png)
 
+解决方式：看源码得知，不传第二个参数的方法，html格式默认值为false，需要手动调整为true，则按照html格式显示。
 
+![image-20201020103833721](images/image-20201020103833721.png)
 
+![image-20201020104049848](images/image-20201020104049848.png)
 
+解决完成：
 
-
+![image-20201020104121955](images/image-20201020104121955.png)
 
