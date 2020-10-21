@@ -2,11 +2,15 @@ package com.zpark.springboot03.controller;
 
 import com.zpark.springboot03.entity.Ucenter;
 import com.zpark.springboot03.service.UcenterService;
+import com.zpark.springboot03.util.VerifyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author Celery
@@ -23,7 +27,23 @@ public class UcenterController {
     }
 
     @PostMapping("/sendVerifyCode")
-    public Object sendVerifyCode(@RequestBody Ucenter ucenter){
+    public Object sendVerifyCode(@RequestBody Ucenter ucenter) {
         return ucenterService.sendVerifyCode(ucenter);
     }
+
+    @GetMapping("verifyPic")
+    public Object verifyPic(HttpServletResponse response) {
+        //输出验证码图片，返回的就不是json了
+        Map<String, Object> data = VerifyUtil.generateVerifyPic();
+        BufferedImage image = (BufferedImage) data.get("verifyPic");
+        try {
+            //输出图片
+            ImageIO.write(image, "jpg", response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

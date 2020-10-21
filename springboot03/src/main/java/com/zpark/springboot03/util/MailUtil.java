@@ -62,7 +62,7 @@ public class MailUtil {
             //标题
             helper.setSubject("验证码");
             //内容
-            helper.setText(content,true);
+            helper.setText(content, true);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
