@@ -3,10 +3,8 @@ package com.zpark.springboot04.controller;
 import com.zpark.springboot04.exception.DownloadFileNotExists;
 import com.zpark.springboot04.util.FileUtil;
 import com.zpark.springboot04.util.R;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,6 +35,16 @@ public class FileController {
             return R.error("文件不存在！");
         }
         return null;
+    }
+
+    @PostMapping("/uploadFile")
+    public Object uploadFile(MultipartFile file) {
+        if (file.isEmpty()){
+            return R.error("请选择文件！");
+        }
+        FileUtil.fileUpload(file);
+//        System.out.println(file);
+        return R.ok("成功接收！");
     }
 
 }

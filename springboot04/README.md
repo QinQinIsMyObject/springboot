@@ -14,7 +14,7 @@
 
 ## spring-boot-devtools
 
-加入依赖
+1、加入依赖
 
 ```xml
 <dependency>
@@ -24,4 +24,16 @@
     <optional>true</optional>
 </dependency>
 ```
+
+2、
+
+![image-20201021163335375](images/image-20201021163335375.png)
+
+3、
+
+![image-20201021163636930](images/image-20201021163636930.png)
+
+4、使用快捷键Ctrl+Shift+Alt+？
+
+![image-20201021163848987](images/image-20201021163848987.png)
 

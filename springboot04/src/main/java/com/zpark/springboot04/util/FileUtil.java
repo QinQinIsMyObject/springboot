@@ -1,10 +1,12 @@
 package com.zpark.springboot04.util;
 
 import com.zpark.springboot04.exception.DownloadFileNotExists;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -18,6 +20,13 @@ public class FileUtil {
      */
     static String baseLocation = "E:/Desktop/file/";
 
+    /**
+     * 下载文件
+     *
+     * @param fileName
+     * @param response
+     * @throws DownloadFileNotExists
+     */
     public static void fileDownload(String fileName, HttpServletResponse response) throws DownloadFileNotExists {
         //创建一个要下载的文件对象
         File file = new File(baseLocation + fileName);
@@ -61,4 +70,31 @@ public class FileUtil {
         }
 
     }
+
+    public static void fileUpload(MultipartFile file) {
+        //新建一个文件
+        File f = new File(baseLocation + file.getOriginalFilename());
+        int index = 1;
+        //得到一个肯定不存在的文件名
+        while (f.exists()) {
+            f = new File(baseLocation + index + file.getOriginalFilename());
+            index++;
+        }
+        //创建这个文件
+        try {
+            f.createNewFile();
+            //创建一个文件输出流
+            FileOutputStream fileOutputStream = new FileOutputStream(f);
+            //得到上传文件的数据
+            byte[] data = file.getBytes();
+            //将数据输出在磁盘上
+            fileOutputStream.write(data);
+            //关流
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
