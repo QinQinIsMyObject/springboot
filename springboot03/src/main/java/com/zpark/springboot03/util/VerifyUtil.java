@@ -1,7 +1,12 @@
 package com.zpark.springboot03.util;
 
+import org.apache.axis.encoding.Base64;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,11 +80,27 @@ public class VerifyUtil {
             g.drawLine(x, y, x1, y1);
         }
 
+        //base64转化
+        String base64 = null;
+        try {
+            Integer width = image.getWidth();
+            Integer height = image.getHeight();
+            //输出流
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", stream);
+            base64 = Base64.encode(stream.toByteArray());
+//            System.out.println(base64);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //创建一个map
         Map<String, Object> data = new HashMap<>();
         //在data里面加入数据
         data.put("verifyCode", verifyCode);
         data.put("verifyPic", image);
+        data.put("verifyBase64", base64);
+
         return data;
     }
 

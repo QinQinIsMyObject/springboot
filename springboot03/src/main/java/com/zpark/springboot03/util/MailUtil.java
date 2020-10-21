@@ -49,7 +49,9 @@ public class MailUtil {
         //设置参数
         context.setVariable("verifyCode", verifyCode);
         //生成一个字符串类型的内容(将模板页面和上下文对象绑定)
-        String content = templateEngine.process("verifyCodeTemplate.html", context);
+//        String content = templateEngine.process("verifyCodeTemplate.html", context);
+        //生成一个Base64字符串类型的内容(将模板页面和上下文对象绑定)
+        String content = templateEngine.process("verifyPicTemplate.html", context);
 
         //准备一个邮件信息对象
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();

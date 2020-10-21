@@ -40,7 +40,9 @@ public class UcenterServiceImpl implements UcenterService {
         }
 
         //得到验证码
-        String verifyCode = VerifyUtil.generateVerifyCode(6);
+//        String verifyCode = VerifyUtil.generateVerifyCode(6);
+        //得到base64的验证码图片
+        String verifyCode = (String) VerifyUtil.generateVerifyPic().get("verifyBase64");
 
         //发送简单邮件
         String content = "欢迎注册！你的验证码是：" + verifyCode + "。打死都不要不告诉别人";
