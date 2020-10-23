@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -56,6 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().addLogoutHandler(logoutHandler());
         //配置不需要spring security进行权限验证的资源
         http.authorizeRequests().antMatchers("/ucenter/**", "/admin/hello").permitAll();
+
+        //配置权限不同的handler
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        //配置不同的资源对应不同的权限
+//        http.authorizeRequests().antMatchers("/admin/insert").hasAuthority("insert");
+//        http.authorizeRequests().antMatchers("/admin/delete").hasAuthority("delete");
+//        http.authorizeRequests().antMatchers("/admin/update").hasAuthority("update");
+//        http.authorizeRequests().antMatchers("/admin/select").hasAuthority("select");
+        //通过角色进行资源的限制
+        http.authorizeRequests().antMatchers("/admin/**").hasRole("superAdmin");
+
         //检验所有的请求
         http.authorizeRequests().anyRequest().authenticated();
     }
@@ -105,6 +117,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public LogoutHandler logoutHandler() {
         return (httpServletRequest, httpServletResponse, e) -> {
             ResponseUtil.responseJSON(httpServletResponse, R.ok("登出成功！"));
+        };
+    }
+
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (httpServletRequest, httpServletResponse, e) -> {
+            ResponseUtil.responseJSON(httpServletResponse, R.error("您的权限不足！"));
         };
     }
 

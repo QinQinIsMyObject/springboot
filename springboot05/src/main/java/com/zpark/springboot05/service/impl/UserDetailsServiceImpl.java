@@ -29,7 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        System.out.println(username);
         Admin admin = adminMapper.findAdminByName(username);
-        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("modify,delete");
+        //在这里添加权限时正常书写的，但如果添加角色，则需要在权限的前面增加字符串：“ROLE_”+具体的权限
+//        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("update,delete");
+        List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList("update,delete,ROLE_superAdmin");
 //        if (!"sam".equals(username)) {
 //            throw new UsernameNotFoundException("用户名不存在！");
 //        }
