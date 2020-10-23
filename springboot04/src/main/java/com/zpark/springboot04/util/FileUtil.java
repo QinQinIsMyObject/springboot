@@ -49,7 +49,7 @@ public class FileUtil {
             byte[] buffer = new byte[10 * 1024];
             //读取到的字节数（当这个值为-1则结束）
             int len = -1;
-            //循环读取文件并输出
+            //循环读取文件并输出，len表示的是“实际读取到的字节数”
             while ((len = fileInputStream.read(buffer)) != -1) {
                 //输出
                 response.getOutputStream().write(buffer, 0, len);
