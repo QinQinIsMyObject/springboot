@@ -15,10 +15,12 @@ public class R {
      * 状态码
      */
     private Integer code;
+
     /**
      * 封装的信息
      */
     private String message;
+
     /**
      * 封装的数据
      */

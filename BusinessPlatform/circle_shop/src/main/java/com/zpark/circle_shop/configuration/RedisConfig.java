@@ -13,10 +13,11 @@ import java.time.Duration;
 
 /**
  * @author Celery
- * springboot的配置类都需要添加一个注解：@Configuration
+ * springboot的配置类都需要添加一个注解： @Configuration
  */
 @Configuration
 public class RedisConfig {
+
     /**
      * 只要给springboot组件中的方法加入@Bean注解，该方法的返回值类型就可以成为别的组件@Autowired的内容
      *
@@ -25,19 +26,15 @@ public class RedisConfig {
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        //创建一个泛型为String，Object的RedisTemplate
+
+        //创建一个泛型为String,Object的RedisTemplate
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-
-//        //创建一种json的序列化机制
-//        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
-
         //设置key的序列化机制
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-
         //设置value的序列化机制
-        redisTemplate.setValueSerializer(getJsonRedisSerializer());
-        redisTemplate.setHashValueSerializer(getJsonRedisSerializer());
+        redisTemplate.setValueSerializer(getJsonSerializer());
+        redisTemplate.setHashValueSerializer(getJsonSerializer());
 
         //将redisTemplate设置给redisConnectionFactory
         redisTemplate.setConnectionFactory(redisConnectionFactory);
@@ -46,16 +43,14 @@ public class RedisConfig {
     }
 
     /**
-     * 配置spring-cache的缓存序列化机制
-     *
-     * @return
+     * 配置Spring-Cache的缓存序列化机制
      */
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration() {
         //获取redis-cache的配置对象
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
-        return configuration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getJsonRedisSerializer())).entryTtl(Duration.ofHours(1));
-
+        return configuration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(getJsonSerializer()))
+                .entryTtl(Duration.ofHours(1));
     }
 
     /**
@@ -63,8 +58,8 @@ public class RedisConfig {
      *
      * @return
      */
-    private Jackson2JsonRedisSerializer getJsonRedisSerializer() {
-        return new Jackson2JsonRedisSerializer(Object.class);
+    private Jackson2JsonRedisSerializer<Object> getJsonSerializer() {
+        return new Jackson2JsonRedisSerializer<Object>(Object.class);
     }
 
 }

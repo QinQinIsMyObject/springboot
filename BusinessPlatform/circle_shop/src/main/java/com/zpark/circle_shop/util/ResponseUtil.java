@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Celery
+ */
 public class ResponseUtil {
 
     /**
@@ -14,8 +17,9 @@ public class ResponseUtil {
      * @param body     将要转变为Json的对象
      */
     public static void responseJson(HttpServletResponse response, Object body) {
+        //设定响应体类型
         response.setContentType("application/json;charset=UTF-8");
-        //创建一个对象映射json的工具实例
+        //创建一个对象映射json的工具类实例
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writeValue(response.getOutputStream(), body);
@@ -23,4 +27,5 @@ public class ResponseUtil {
             e.printStackTrace();
         }
     }
+
 }

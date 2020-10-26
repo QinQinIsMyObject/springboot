@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpark.circle_shop.mapper.GoodsMapper">
+
+    <select id="goodsList" resultType="com.zpark.circle_shop.entity.Goods">
+        select g.g_id,
+               g.g_name,
+               g.keywords,
+               g.pic,
+               g.brand,
+               gd.p as price,
+               gr.sales
+        from (select g_id,
+                     min(price) p
+              from goods_detail
+              group by g_id
+             ) gd,
+             goods g
+                 left join
+             (select g_id,
+                     count(deals) as sales
+              from goods_record
+              where year(record_date) = year(now())
+                and month(record_date) = month(now())
+              group by g_id
+             ) gr
+             on
+                 g.g_id = gr.g_id
+        where g.state != 2
+          and g.g_id = gd.g_id
+    </select>
+
+    <select id="findGoodsDetailByGId" resultType="com.zpark.circle_shop.entity.GoodsDetail">
+
+    </select>
+</mapper>

@@ -17,6 +17,9 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+/**
+ * @author Celery
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -25,12 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //设置用户名和密码的时候，有加密的概念(密码无加密）
-        //auth.inMemoryAuthentication().withUser("sam").password("{noop}123").roles("admin");
-        //设置主动加密后的密码
-        // String password = passwordEncoder().encode("123");
-        // auth.inMemoryAuthentication().withUser("sam").password(password).roles("");
-        //设置userDetailsService为验证的服务类
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -38,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //关闭csrf防护
         http.csrf().disable();
-        //设置登录成功上位handler
+        //设置登录成功的handler
         http.formLogin().successHandler(successHandler());
         //配置未验证状态请求数据所返回的内容
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
@@ -49,20 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //配置权限不足的handler
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         //配置不需要spring security进行权限验证的资源
-        http.authorizeRequests().antMatchers("/ucenter/**", "/admin/hello").permitAll();
-        //配置不同的资源对应不同的权限
-//        http.authorizeRequests().antMatchers("/admin/insert").hasAuthority("insert");
-//        http.authorizeRequests().antMatchers("/admin/delete").hasAuthority("delete");
-//        http.authorizeRequests().antMatchers("/admin/update").hasAuthority("update");
-//        http.authorizeRequests().antMatchers("/admin/select").hasAuthority("select");
-        //通过角色进行资源的限制
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("superAdmin");
+        http.authorizeRequests().antMatchers("/api/goods/**").permitAll();
         //检验所有的请求
         http.authorizeRequests().anyRequest().authenticated();
     }
 
     /**
-     * 配置加密方式
+     * 配置密码的加密类
      *
      * @return
      */
@@ -74,27 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
-            //登录成功后输出json
             ResponseUtil.responseJson(httpServletResponse, R.ok("登录成功！"));
         };
     }
 
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (httpServletRequest, httpServletResponse, e) -> {
-            ResponseUtil.responseJson(httpServletResponse, R.error("您还未拥有权限！"));
+            ResponseUtil.responseJson(httpServletResponse, R.error("您还未登录！"));
         };
-//        return new AuthenticationEntryPoint() {
-//            @Override
-//            public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-////                if (e instanceof UsernameNotFoundException){
-////                    ResponseUtil.responseJSON(httpServletResponse, R.error("用户名或密码错误！"));
-////                }else if (e instanceof BadCredentialsException) {
-////
-////                }
-////                System.out.println(e.getClass());
-//                ResponseUtil.responseJSON(httpServletResponse, R.error("您还未经过验证"));
-//            }
-//        };
     }
 
     public AuthenticationFailureHandler failureHandler() {
@@ -105,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public LogoutHandler logoutHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
-            ResponseUtil.responseJson(httpServletResponse, R.ok("退出登录"));
+            ResponseUtil.responseJson(httpServletResponse, R.ok("登出成功！"));
         };
     }
 
@@ -113,10 +90,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return (httpServletRequest, httpServletResponse, e) -> {
             ResponseUtil.responseJson(httpServletResponse, R.error("您的权限不足！"));
         };
-
     }
+
 }
-
-
-
-
