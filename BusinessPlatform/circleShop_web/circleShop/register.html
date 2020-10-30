@@ -30,10 +30,15 @@
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
 
+    <script src="./assets/js/axios.min.js"></script>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/util.js"></script>
+
 </head>
 
 <body>
-
+    
+<div id="app">
     <!-- ========================
     Offcanvas Menu Area Start 
     ===========================-->
@@ -864,42 +869,34 @@
                 <div class="offset-lg-3 col-lg-6">
                     <div class="checkout_info mb-20">
                         <form class="form-row" action="#">
-                            <h5 class="last-title mb-10 text-center">Creat New Account</h5>
+                            <h5 class="last-title mb-10 text-center">创建新的账户</h5>
                             <div class="col-lg-12 text-left mb-20">
-                                <p class="register-page"> Already have an account? <a href="login.html">Log in instead!</a></p>
+                                <p class="register-page"> 已经有了一个账户? <a href="login.html">去登录!</a></p>
                             </div>
                             <div class="form_group col-12">
-                                <label class="form-label">First Name <span>*</span></label>
-                                <input class="input-form" type="text">
+                                <label class="form-label">用户名 <span>*</span></label>
+                                <input class="input-form" type="text" v-model="user.uName">
                             </div>
                             <div class="form_group col-12">
-                                <label class="form-label">Last Name <span>*</span></label>
-                                <input class="input-form" type="text">
+                                <label class="form-label">邮箱 <span>*</span></label>
+                                <input class="input-form" type="text" v-model="user.email">
                             </div>
                             <div class="form_group col-12">
-                                <label class="form-label">Email Address <span>*</span></label>
-                                <input class="input-form" type="text">
+                                <label class="form-label">验证码 <span>*</span></label>
+                                <input class="input-form input-login" type="text" v-model="verifyCode">
+                                <button class="show-btn" @click.prevent="sendVerify" v-text="interval == 120 ? '发送': interval+'s'"></button>
                             </div>
                             <div class="form_group col-12">
-                                <label class="form-label">Current Password <span>*</span></label>
-                                <input class="input-form input-login" type="text">
-                                <button class="show-btn">Show</button>
+                                <label class="form-label">新密码 <span>*</span></label>
+                                <input class="input-form input-login" type="password" v-model="user.pwd">
+                                <button class="show-btn">显示</button>
                             </div>
                             <div class="form_group col-12">
-                                <label class="form-label">New Password <span>*</span></label>
-                                <input class="input-form input-login" type="text">
-                                <button class="show-btn">Show</button>
+                                <label class="form-label">确认密码 <span>*</span></label>
+                                <input class="input-form input-login" type="text" v-model="confirmPwd">
+                                <button class="show-btn">显示</button>
                             </div>
-                            <div class="form_group col-12">
-                                <label class="form-label">Confirm Password <span>*</span></label>
-                                <input class="input-form input-login" type="text">
-                                <button class="show-btn">Show</button>
-                            </div>
-                            <div class="form_group col-12 position-relative">
-                                <label class="form-label">Birthdate (Optional)</label>
-                                <input class="input-form" type="text">
-                            </div>
-                            <div class="form-row">
+                            <div class="form-row">`
                                 <div class="form-group col-12">
                                     <div class="form-check">
                                         <div class="custom-checkbox">
@@ -922,7 +919,7 @@
                                 </div>
                             </div>
                             <div class="form-row mt-20">
-                                <input type="submit" class="btn-secondary" value="Register">
+                                <input type="submit" class="btn-secondary" value="注册" @click.prevent="register">
                             </div>
                         </form>
                     </div>
@@ -1243,7 +1240,7 @@
         </div>
     </div>
     <!-- modal area end-->
-
+</div>
     <!-- JS
 ============================================ -->
 
@@ -1271,6 +1268,7 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="./assets/js/vue/register.js"></script>
 
 </body>
 

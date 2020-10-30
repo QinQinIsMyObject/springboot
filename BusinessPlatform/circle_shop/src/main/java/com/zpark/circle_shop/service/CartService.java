@@ -38,5 +38,4 @@ public interface CartService {
      */
     Integer deleteByUIdAndGdId(CircleUser user, List<Cart> carts);
 
-
 }

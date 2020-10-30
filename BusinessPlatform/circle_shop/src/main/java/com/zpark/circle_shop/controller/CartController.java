@@ -56,5 +56,4 @@ public class CartController {
         return cartService.deleteByUIdAndGdId(user, carts) > 0 ? R.ok("删除成功！") : R.error("服务器异常！删除失败。");
     }
 
-
 }

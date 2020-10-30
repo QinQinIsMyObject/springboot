@@ -16,4 +16,5 @@ public interface GoodsService {
     Object findGoodsById(Goods goods);
 
     Object findByKeywords(String keywords);
+
 }

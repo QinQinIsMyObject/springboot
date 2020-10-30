@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //配置权限不足的handler
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         //配置不需要spring security进行权限验证的资源
-        http.authorizeRequests().antMatchers("/api/goods/**", "/api/user/register/**", "/api/cart/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/goods/**", "/api/user/register/**", "/api/cart/**", "/api/mail/**").permitAll();
         //检验所有的请求
         http.authorizeRequests().anyRequest().authenticated();
     }

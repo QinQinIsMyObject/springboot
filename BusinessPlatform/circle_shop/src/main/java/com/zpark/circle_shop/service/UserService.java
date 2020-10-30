@@ -6,4 +6,6 @@ public interface UserService {
 
     boolean exists(CircleUser user);
 
+    Integer register(CircleUser user, String verifyCode);
+
 }

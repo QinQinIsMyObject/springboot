@@ -18,5 +18,4 @@ public class Cart implements Serializable {
     private Double price;
     private Double special;
 
-
 }

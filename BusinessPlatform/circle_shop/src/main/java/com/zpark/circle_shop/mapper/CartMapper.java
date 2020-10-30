@@ -58,5 +58,4 @@ public interface CartMapper {
      */
     Integer deleteByUIdAndGdId(@Param("user") CircleUser user, @Param("carts") List<Cart> carts);
 
-
 }

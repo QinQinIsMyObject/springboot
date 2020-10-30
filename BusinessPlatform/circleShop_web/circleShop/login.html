@@ -884,7 +884,7 @@
                                 <div style="color: red; margin: 4px; height: 14px;" v-text="passwordCorrect ? '' : '密码格式不正确'"></div>
                             </div>
                             <div class="form_group group_3 col-lg-3">
-                                <button class="login-register" @click="login">登录</button>
+                                <button class="login-register" @click.prevent="login">登录</button>
                             </div>
                             <div class="form_group group_3 col-lg-9">
                                 <label for="remember_box">
