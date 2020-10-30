@@ -1,5 +1,6 @@
 package com.zpark.circle_shop.configuration;
 
+import com.zpark.circle_shop.entity.CircleUser;
 import com.zpark.circle_shop.util.R;
 import com.zpark.circle_shop.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Celery
  */
@@ -33,10 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //开启跨域
+        http.cors();
         //关闭csrf防护
         http.csrf().disable();
         //设置登录成功的handler
-        http.formLogin().successHandler(successHandler());
+        http.formLogin().loginProcessingUrl("/api/user/login").successHandler(successHandler());
         //配置未验证状态请求数据所返回的内容
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
         //设置登录失败的handler
@@ -46,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //配置权限不足的handler
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         //配置不需要spring security进行权限验证的资源
-        http.authorizeRequests().antMatchers("/api/goods/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/goods/**", "/api/user/register/**", "/api/cart/**").permitAll();
         //检验所有的请求
         http.authorizeRequests().anyRequest().authenticated();
     }
@@ -64,7 +69,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
-            ResponseUtil.responseJson(httpServletResponse, R.ok("登录成功！"));
+            //获取session
+            HttpSession session = httpServletRequest.getSession();
+            //获取circleUser
+            CircleUser circleUser = (CircleUser) session.getAttribute("circleUser");
+            ResponseUtil.responseJson(httpServletResponse, R.ok("登录成功！").addData("circleUser", circleUser));
         };
     }
 

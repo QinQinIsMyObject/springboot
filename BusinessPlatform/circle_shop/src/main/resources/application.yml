@@ -28,4 +28,4 @@ mybatis:
 
 logging:
   level:
-    com.zpark.circle_shop: debug
+    com.zpark.circle_shop.mapper: debug

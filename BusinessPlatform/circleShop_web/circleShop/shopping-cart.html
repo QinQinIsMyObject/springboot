@@ -30,10 +30,14 @@
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
 
+    <script src="./assets/js/axios.min.js"></script>
+    <script src="./assets/js/vue.js"></script>
+
 </head>
 
 <body>
 
+<div id="app">
     <!-- ========================
     Offcanvas Menu Area Start 
     ===========================-->
@@ -865,7 +869,7 @@
                     <form action="#" class="cart-form">
                         <!-- Cart Title Start -->
                         <div class="cart-title">
-                            <h5 class="last-title mt-50 mb-20">Shopping Cart</h5>
+                            <h5 class="last-title mt-50 mb-20">购物车</h5>
                         </div>
                         <!-- Cart Title End -->
                         <!-- Cart Table Area Start -->
@@ -874,38 +878,22 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th class="product-image">Image</th>
-                                            <th class="product-name">Product</th>
-                                            <th class="product-price">Price</th>
-                                            <th class="product-quantity">Quantity</th>
-                                            <th class="product-total">Total</th>
-                                            <th class="product-remove">Delete</th>
+                                            <th class="product-image">图片</th>
+                                            <th class="product-name">商品名称</th>
+                                            <th class="product-price">单价</th>
+                                            <th class="product-quantity">数量</th>
+                                            <th class="product-total">总价</th>
+                                            <th class="product-remove">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="product-image"><a href="#"><img src="assets/images/feature/feature-4.jpg" alt=""></a></td>
-                                            <td class="product-name"><a href="#">Natus erro at congue massa commodo sit dignissim</a></td>
-                                            <td class="product-price">£65.00</td>
-                                            <td class="product-quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                            <td class="product-total">£130.00</td>
-                                            <td class="product-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="product-image"><a href="#"><img src="assets/images/feature/feature-3.jpg" alt=""></a></td>
-                                            <td class="product-name"><a href="#">Mirum est notare tellus eu nibh iaculis pretium</a></td>
-                                            <td class="product-price">£90.00</td>
-                                            <td class="product-quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                            <td class="product-total">£180.00</td>
-                                            <td class="product-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="product-image"><a href="#"><img src="assets/images/feature/feature-2.jpg" alt=""></a></td>
-                                            <td class="product-name"><a href="#">Porro quisquam eget feugiat pretium sodales</a></td>
-                                            <td class="product-price">£80.00</td>
-                                            <td class="product-quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                            <td class="product-total">£160.00</td>
-                                            <td class="product-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                        <tr v-for="(cart, index) in carts" :key="index">
+                                            <td class="product-image"><a :href="'./product-details.html?gid=' + cart.gid"><img :src="cart.pic" alt="" width="120" height="120"></a></td>
+                                            <td class="product-name"><a :href="'./product-details.html?gid=' + cart.gid" v-text="cart.gname"></a></td>
+                                            <td class="product-price" v-text="'￥'+(cart.special == null ? cart.price : cart.special).toFixed(2)"></td>
+                                            <td class="product-quantity"><input min="1" max="100" :value="cart.amount" type="number"></td>
+                                            <td class="product-total" v-text="'￥' + ((cart.special == null ? cart.price : cart.special) * cart.amount).toFixed(2)"></td>
+                                            <td class="product-remove"><a href="#" @click.prevent="deleteSingle(cart.gdId, cart)"><i class="fa fa-trash-o"></i></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1273,7 +1261,7 @@
         </div>
     </div>
     <!-- modal area end-->
-
+</div>
     <!-- JS
 ============================================ -->
 
@@ -1301,6 +1289,7 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="./assets/js/vue/cart.js"></script>
 
 </body>
 

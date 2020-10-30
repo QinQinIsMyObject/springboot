@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpark.circle_shop.mapper.UserMapper">
+    <select id="userLogin" resultType="com.zpark.circle_shop.entity.CircleUser">
+        select id,
+               u_name,
+               pwd,
+               email,
+               avatar,
+               birthday,
+               credit,
+               points
+        from circle_user
+        where u_name = #{uName}
+          and state = 1
+    </select>
+
+    <select id="exists" resultType="com.zpark.circle_shop.entity.CircleUser">
+        select id from circle_user
+        <where>
+            <if test="uName != null">
+                u_name = #{uName}
+            </if>
+            <if test="email != null">
+                email = #{email}
+            </if>
+            and state != 2
+        </where>
+    </select>
+</mapper>

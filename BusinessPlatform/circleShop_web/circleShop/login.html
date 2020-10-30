@@ -30,10 +30,16 @@
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
 
+    <script src="./assets/js/axios.min.js"></script>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/util.js"></script>
+
+
 </head>
 
 <body>
 
+<div id="app">
     <!-- ========================
     Offcanvas Menu Area Start 
     ===========================-->
@@ -864,30 +870,33 @@
                 <div class="offset-lg-3 col-lg-6">
                     <div class="checkout_info mb-20">
                         <form class="form-row" action="#">
-                            <h1 class="last-title mb-30 text-center">Login to Your Account</h1>
+                            <h1 class="last-title mb-30 text-center">登录您的账户</h1>
                             <div class="form_group col-12">
-                                <label class="form-label">Username or email <span>*</span></label>
-                                <input class="input-form" type="text">
+                                <label class="form-label">用户名或邮箱 <span>*</span></label>
+                                <input class="input-form" type="text" v-model="user.username" @blur="regexCheckUsername">
+                                <div style="color: red; margin: 4px; height: 14px;" v-text="usernameCorrect ? '' : '用户名格式不正确'"></div>
                             </div>
                             <div class="form_group col-12 position-relative">
-                                <label class="form-label">Password <span>*</span></label>
-                                <input class="input-form input-login" type="text">
-                                <button class="show-btn">Show</button>
+                                <label class="form-label">密码 <span>*</span></label>
+                                <input class="input-form input-login" :type="showPassword ? 'text' : 'password'" v-model="user.password" @blur="regexCheckPassword">
+                                <button class="show-btn" @click="showPassword = !showPassword" 
+                                    v-text="showPassword ? '隐藏' : '显示'"></button>
+                                <div style="color: red; margin: 4px; height: 14px;" v-text="passwordCorrect ? '' : '密码格式不正确'"></div>
                             </div>
                             <div class="form_group group_3 col-lg-3">
-                                <button class="login-register" type="submit">Login</button>
+                                <button class="login-register" @click="login">登录</button>
                             </div>
                             <div class="form_group group_3 col-lg-9">
                                 <label for="remember_box">
                                     <input id="remember_box" type="checkbox">
-                                    <span> Remember me </span>
+                                    <span> 记住账号 </span>
                                 </label>
                             </div>
                             <div class="col-lg-12 text-left">
-                                <a class="lost-password" href="#">Lost your password?</a>
+                                <a class="lost-password" href="#">忘记密码?</a>
                             </div>
                             <div class="col-lg-12 text-left">
-                                <p class="register-page"> No account? <a href="register.html">Create one here</a>.</p>
+                                <p class="register-page"> 还没有账户? <a href="register.html">创建一个</a>.</p>
                             </div>
                         </form>
                     </div>
@@ -1208,7 +1217,7 @@
         </div>
     </div>
     <!-- modal area end-->
-
+</div>
     <!-- JS
 ============================================ -->
 
@@ -1236,6 +1245,7 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="./assets/js/vue/login.js"></script>
 
 </body>
 

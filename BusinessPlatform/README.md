@@ -35,3 +35,10 @@ idea2020.2.2、MySQL8、redis
 ![image-20201026130310634](images/image-20201026130310634.png)
 
 可能为redis没有启动导致
+
+## 卸载掉冲突的mybatis插件
+
+![image-20201026140208011](images/image-20201026140208011.png)
+
+
+

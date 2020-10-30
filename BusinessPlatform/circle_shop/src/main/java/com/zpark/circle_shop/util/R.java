@@ -1,6 +1,7 @@
 package com.zpark.circle_shop.util;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
  * @author Celery
  */
 @Data
+@Accessors(chain = true)
 public class R {
 
     /**
