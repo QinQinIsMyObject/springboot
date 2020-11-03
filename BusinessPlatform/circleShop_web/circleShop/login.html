@@ -879,7 +879,7 @@
                             <div class="form_group col-12 position-relative">
                                 <label class="form-label">密码 <span>*</span></label>
                                 <input class="input-form input-login" :type="showPassword ? 'text' : 'password'" v-model="user.password" @blur="regexCheckPassword">
-                                <button class="show-btn" @click="showPassword = !showPassword" 
+                                <button class="show-btn" @click.prevent="showPassword = !showPassword" 
                                     v-text="showPassword ? '隐藏' : '显示'"></button>
                                 <div style="color: red; margin: 4px; height: 14px;" v-text="passwordCorrect ? '' : '密码格式不正确'"></div>
                             </div>

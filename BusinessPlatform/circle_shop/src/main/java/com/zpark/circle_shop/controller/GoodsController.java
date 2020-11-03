@@ -32,8 +32,8 @@ public class GoodsController {
     }
 
     @GetMapping("/findGoodsByKeywords")
-    public Object findGoodsByKeywords(@RequestParam("keywords") String keywords) {
-        Object goodsKeywords = goodsService.findByKeywords(keywords);
+    public Object findGoodsByKeywords(@RequestParam("keywords") String keywords, @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
+        Object goodsKeywords = goodsService.findByKeywords(keywords, pageNum);
         return R.ok("查询成功！").addData("findByKeywords", goodsKeywords);
     }
 

@@ -2,7 +2,9 @@ new Vue({
     el: '#app',
     data() {
         return {
-            carts: []
+            carts: [],
+            select: false,
+            selectGoods: []
         }
     },
     methods: {
@@ -14,6 +16,19 @@ new Vue({
                     })
                 }
             })
+        },
+        selectAll() {
+            this.select = !this.select
+            //使用jquery选中所有的checkbox标签
+            $('.product-select-box').attr('checked', this.select)
+        },
+        checkOut() {
+            if (this.selectGoods.length < 1) {
+                alert('您还未选择任何商品！')
+            } else {
+                localStorage.setItem('checkOutGoods', JSON.stringify(this.selectGoods))
+                location.href = './checkout.html'
+            }
         }
     },
     created() {
@@ -25,5 +40,15 @@ new Vue({
             }
             this.carts = resp.data.data.carts
         })
-    }
+    },
+    computed: {
+        calculateTotal() {
+            let total = 0;
+            for (let i = 0; i < this.selectGoods.length; i++){
+                let cart = this.selectGoods[i]
+                total += ((cart.special == null ? cart.price : cart.special) * cart.amount)
+            }
+            return total.toFixed(2)
+        }
+    },
 })

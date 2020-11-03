@@ -1,5 +1,8 @@
 package com.zpark.circle_shop.util;
 
+/**
+ * @author Celery
+ */
 public class UserInfoUtil {
 
     public static boolean checkUsername(String username) {

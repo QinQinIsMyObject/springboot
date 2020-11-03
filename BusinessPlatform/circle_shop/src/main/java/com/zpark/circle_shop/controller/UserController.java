@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Celery
+ */
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -30,6 +33,7 @@ public class UserController {
 
     @PostMapping("/register")
     public Object register(CircleUser user, String verifyCode) {
+
         if (UserInfoUtil.checkEmail(user.getEmail())
                 &&
                 UserInfoUtil.checkUsername(user.getUName())

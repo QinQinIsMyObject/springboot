@@ -30,10 +30,22 @@
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
 
+    <script src="./assets/js/axios.min.js"></script>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/util.js"></script>
+
+    <script>
+        let goods = localStorage.getItem("checkOutGoods");
+        if (goods == null || goods == undefined) {
+            location.href = './index.html'
+        }
+    </script>
+
 </head>
 
 <body>
 
+<div id="app">
     <!-- ========================
     Offcanvas Menu Area Start 
     ===========================-->
@@ -1071,43 +1083,24 @@ Breadcrumb Aera Start
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Total</th>
+                                            <th>商品</th>
+                                            <th>价格</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td> DSLR Cameras <strong> × 2</strong></td>
-
-
-
-                                            <td> $165.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td> Lense Camera <strong> × 2</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td> Digital Cameras <strong> × 2</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td> Mirrorless Cameras <strong> × 1</strong></td>
-                                            <td> $50.00</td>
+                                        <tr v-for="(goods, index) in selectGoods" :key="index">
+                                            <td> {{goods.gname}} <strong> × {{goods.amount}}</strong></td>
+                                            <td> ￥ {{((goods.special == null ? goods.price : goods.special) * goods.amount).toFixed(2)}}</td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Cart Subtotal</th>
-                                            <td>$215.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shipping</th>
-                                            <td><strong>$5.00</strong></td>
+                                            <th>运费</th>
+                                            <td><strong>￥ 0.00</strong></td>
                                         </tr>
                                         <tr class="order_total">
-                                            <th>Order Total</th>
-                                            <td><strong>$220.00</strong></td>
+                                            <th>总价</th>
+                                            <td><strong>￥ {{calculateTotal}}</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -1190,7 +1183,7 @@ Breadcrumb Aera Start
                         </div>
                     </div>
                     <div class="form-row justify-content-end mt-20 mb-20">
-                        <input type="submit" class="btn-secondary" value="Continue to Payment">
+                        <input type="submit" class="btn-secondary" value="创建订单" @click="createOrder">
                     </div>
                 </div>
             </div>
@@ -1509,7 +1502,7 @@ Breadcrumb Aera Start
         </div>
     </div>
     <!-- modal area end-->
-
+</div>
     <!-- JS
 ============================================ -->
 
@@ -1537,6 +1530,7 @@ Breadcrumb Aera Start
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <script src="./assets/js/vue/checkout.js"></script>
 
 </body>
 

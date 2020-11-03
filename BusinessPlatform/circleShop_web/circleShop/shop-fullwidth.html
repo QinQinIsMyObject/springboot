@@ -823,8 +823,8 @@
                                     </select>
                                 </div>
                                 <div class="search_box">
-                                    <input class="header-search" placeholder="Enter your search key ..." type="text">
-                                    <button class="header-search-button" type="submit">Search</button>
+                                    <input class="header-search" placeholder="请输入搜索内容 ..." type="text" v-model="keywords">
+                                    <button class="header-search-button" type="submit" @click.prevent="searchByKeywords">搜索</button>
                                 </div>
                             </form>
                         </div>

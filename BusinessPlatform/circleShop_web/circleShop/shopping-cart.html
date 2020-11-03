@@ -878,6 +878,7 @@
                                 <table>
                                     <thead>
                                         <tr>
+                                            <th class="product-select">选择</th>
                                             <th class="product-image">图片</th>
                                             <th class="product-name">商品名称</th>
                                             <th class="product-price">单价</th>
@@ -888,6 +889,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(cart, index) in carts" :key="index">
+                                            <td><input class="product-select-box" type="checkbox" :value="cart" v-model="selectGoods"></td>
                                             <td class="product-image"><a :href="'./product-details.html?gid=' + cart.gid"><img :src="cart.pic" alt="" width="120" height="120"></a></td>
                                             <td class="product-name"><a :href="'./product-details.html?gid=' + cart.gid" v-text="cart.gname"></a></td>
                                             <td class="product-price" v-text="'￥'+(cart.special == null ? cart.price : cart.special).toFixed(2)"></td>
@@ -899,7 +901,8 @@
                                 </table>
                             </div>
                             <div class="cart-submit">
-                                <button type="submit">update cart</button>
+                                全选<input type="checkbox" @click="selectAll">
+                                <button type="submit" style="margin-left: 200px;">更新购物车</button>
                             </div>
                         </div>
                         <!-- Cart Table Area End -->
@@ -918,24 +921,18 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="coupon-code right">
-                                        <h3>Cart Totals</h3>
+                                        <h3>购物车结算</h3>
                                         <div class="coupon-inner">
-                                            <div class="cart-subtotal">
-                                                <p>Subtotal</p>
-                                                <p class="cart-amount">£215.00</p>
-                                            </div>
                                             <div class="cart-subtotal ">
-                                                <p>Shipping</p>
-                                                <p class="cart-amount"><span>Flat Rate:</span> £255.00</p>
+                                                <p>其他费用</p>
+                                                <p class="cart-amount"><span>运输费:</span> ￥0.00</p>
                                             </div>
-                                            <a href="#">Calculate shipping</a>
-
                                             <div class="cart-subtotal">
-                                                <p>Total</p>
-                                                <p class="cart-amount">£215.00</p>
+                                                <p>总价</p>
+                                                <p class="cart-amount" v-text="calculateTotal"></p>
                                             </div>
                                             <div class="checkout-btn">
-                                                <a href="#">Proceed to Checkout</a>
+                                                <a href="#" @click.prevent="checkOut">去结算</a>
                                             </div>
                                         </div>
                                     </div>

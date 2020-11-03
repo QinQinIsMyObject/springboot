@@ -50,4 +50,20 @@
         where c.gd_id = gd.gd_id
           and c.u_id = #{id}
     </select>
+
+    <select id="selectById" resultType="com.zpark.circle_shop.entity.Cart">
+        select c.c_id,
+               c.gd_id,
+               c.amount,
+               gd.g_id,
+               gd.price,
+               gd.special,
+               gd.pic,
+               gd.model as g_name
+        from cart c,
+             goods_detail gd
+        where c.gd_id = gd.gd_id
+          and c.u_id = #{uId}
+          and c.c_id = #{cId}
+    </select>
 </mapper>

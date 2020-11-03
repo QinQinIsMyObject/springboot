@@ -29,11 +29,15 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css">
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css">
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script src="./assets/js/axios.min.js"></script>
+    <script src="./assets/js/vue.js"></script>
+    <script src="./assets/js/util.js"></script>
 
 </head>
 
 <body>
 
+<div id="app">
     <!-- ========================
     Offcanvas Menu Area Start 
     ===========================-->
@@ -862,7 +866,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-2">
-                    <ul class="nav flex-column dashboard-list mb-20 role=" tablist">
+                    <ul class="nav flex-column dashboard-list mb-20 role=" tablist>
                         <li><a class="nav-link" data-toggle="tab" href="#dashboard">Dashboard</a></li>
                         <li> <a class="nav-link active show" data-toggle="tab" href="#orders">Orders</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#downloads">Downloads</a></li>
@@ -879,33 +883,37 @@
                             <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
                         </div> <!-- end of tab-pane -->
                         <div id="orders" class="tab-pane fade active show">
-                            <h3 class="last-title">Orders</h3>
+                            <h3 class="last-title">订单</h3>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Order</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
-                                            <th>Total</th>
-                                            <th>Actions</th>
+                                            <th>编号</th>
+                                            <th>订单名</th>
+                                            <th>状态</th>
+                                            <th>总价</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>September 10, 2019</td>
-                                            <td>Processing</td>
-                                            <td>$25.00 for 1 item </td>
-                                            <td><a class="btn btn-secondary" href="cart.html">view</a></td>
+                                    <tbody v-if="orders.length>0">
+                                        <tr v-for="(order, index) in orders" :key="index">
+                                            <td>{{index+1}}</td>
+                                            <td style="width: 40%;">{{order.oname}}</td>
+                                            <td>{{order.state == 0 ? "待支付" : "其他状态"}}</td>
+                                            <td> ￥ {{order.totalPrice}}</td>
+                                            <td>
+                                                <a class="btn btn-secondary" href="#">查看</a>
+                                                <a class="btn btn-secondary" v-if="order.state==0"
+                                                :href="'http://127.0.0.1:8081/api/order/getPayUrl?oNum=' + order.onum" >去支付</a>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>October 4, 2019</td>
-                                            <td>Processing</td>
-                                            <td>$17.00 for 1 item </td>
-                                            <td><a class="btn btn-secondary" href="cart.html">view</a></td>
-                                        </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                       <tr>
+                                           <td colspan="5" style="text-align: center; color: grey;">
+                                                暂无订单
+                                           </td>
+                                       </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -1328,7 +1336,7 @@
         </div>
     </div>
     <!-- modal area end-->
-
+</div>
     <!-- JS
 ============================================ -->
 
@@ -1356,6 +1364,8 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+
+    <script src="./assets/js/vue/my-account.js"></script>
 
 </body>
 

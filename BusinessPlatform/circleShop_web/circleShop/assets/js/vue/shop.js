@@ -2,6 +2,7 @@ new Vue({
     el: '#app',
     data() {
         return {
+            keywords: '',
             goodsList: {},
             // pageInfo: {
             //     hasNextPage: false,
@@ -16,12 +17,24 @@ new Vue({
     },
     methods: {
         goodsPage(pageNum) {
-            http.get('/api/goods/goodsList', { pageNum }).then(resp => {
-                this.goodsList = resp.data.data.goodsList
-            })
+            if (this.keywords === '') {
+                http.get('/api/goods/goodsList', { pageNum }).then(resp => {
+                    this.goodsList = resp.data.data.goodsList
+                })
+            } else {
+                http.get('/api/goods/findGoodsByKeywords', { keywords: this.keywords, pageNum}).then(resp => {
+                    this.goodsList = resp.data.data.findByKeywords
+                })
+            }
+            
         },
         goodsDetails(gid) {
             location.href = './product-details.html?gid='+gid
+        },
+        searchByKeywords() {
+            http.get('/api/goods/findGoodsByKeywords', { keywords: this.keywords }).then(resp => {
+                this.goodsList = resp.data.data.findByKeywords
+            })
         }
     },
     created() {

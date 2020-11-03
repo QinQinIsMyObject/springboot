@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpark.circle_shop.mapper.OrderMapper">
+    <sql id="order1">
+        o_num, o_name, u_id, gd_id, price, amount, total_price
+        <if test="#{details} != null">
+            , details
+        </if>
+        , create_time, update_time
+    </sql>
+
+    <sql id="order1-1">
+        #{oNum}, #{oName}, #{uId}, #{gdId}, #{price}, #{amount}, #{totalPrice}
+        <if test="#{details} != null">
+            , #{details}
+        </if>
+        , now(), now()
+    </sql>
+
+    <insert id="createOrder">
+        insert into goods_order (<include refid="order1">
+    </include>)
+        values (<include refid="order1-1">
+    </include>)
+    </insert>
+
+    <update id="updateOrder">
+        update goods_order
+        set state       = #{state},
+            update_time = now()
+        where o_id = #{oId}
+    </update>
+
+    <select id="selectOrderByUId" resultType="com.zpark.circle_shop.entity.Order">
+        select *
+        from goods_order
+        where u_id = #{id}
+    </select>
+
+    <select id="selectOrderByNum" resultType="com.zpark.circle_shop.entity.Order">
+        select *
+        from goods_order
+        where o_num = #{oNum}
+    </select>
+</mapper>

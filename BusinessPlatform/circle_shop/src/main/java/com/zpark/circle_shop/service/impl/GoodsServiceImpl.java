@@ -50,14 +50,16 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Object findByKeywords(String keywords) {
+    public Object findByKeywords(String keywords, Integer pageNum) {
+
+        PageHelper.startPage(pageNum, 12);
 
         Object redisGoodsKeywords = redisTemplate.opsForValue().get("findGoodsByKeywords::" + keywords);
         if (redisGoodsKeywords != null) {
             return redisGoodsKeywords;
         }
 
-        List<Goods> goodsKeywords = goodsMapper.findGoodsByKeywords(keywords);
+        PageInfo<Goods> goodsKeywords = new PageInfo<>(goodsMapper.findGoodsByKeywords(keywords));
 
         //计算商品搜索的热度，满足热度，则存redis
         Integer r = (Integer) redisTemplate.opsForValue().get("goodsKeywords::" + keywords);

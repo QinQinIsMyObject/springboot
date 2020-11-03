@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Celery
+ */
 @Repository
 public interface CartMapper {
 
@@ -49,7 +52,6 @@ public interface CartMapper {
      */
     Integer deleteByUId(CircleUser user);
 
-
     /**
      * 批量删除某用户的一些购物车记录
      *
@@ -57,5 +59,13 @@ public interface CartMapper {
      * @return
      */
     Integer deleteByUIdAndGdId(@Param("user") CircleUser user, @Param("carts") List<Cart> carts);
+
+    /**
+     * 通过cart的主键id和用户id查询购物车信息
+     *
+     * @param cart
+     * @return
+     */
+    Cart selectById(Cart cart);
 
 }

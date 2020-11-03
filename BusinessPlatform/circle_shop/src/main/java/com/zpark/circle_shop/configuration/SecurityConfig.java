@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //配置权限不足的handler
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         //配置不需要spring security进行权限验证的资源
-        http.authorizeRequests().antMatchers("/api/goods/**", "/api/user/register/**", "/api/cart/**", "/api/mail/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/goods/**", "/api/user/register/**", "/api/mail/**", "/api/order/returnUrl", "/api/order/notifyUrl").permitAll();
         //检验所有的请求
         http.authorizeRequests().anyRequest().authenticated();
     }
@@ -79,13 +79,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (httpServletRequest, httpServletResponse, e) -> {
-            ResponseUtil.responseJson(httpServletResponse, R.error("您还未登录！"));
+            ResponseUtil.responseJson(httpServletResponse, R.error("您还未登录！").setCode(2));
         };
     }
 
     public AuthenticationFailureHandler failureHandler() {
         return (httpServletRequest, httpServletResponse, e) -> {
             ResponseUtil.responseJson(httpServletResponse, R.error("用户名或密码错误！"));
+            HttpSession session = httpServletRequest.getSession();
+            session.removeAttribute("circleUser");
         };
     }
 

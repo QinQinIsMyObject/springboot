@@ -9,6 +9,9 @@ import org.thymeleaf.context.Context;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * @author Celery
+ */
 public class MailUtil {
 
     /**

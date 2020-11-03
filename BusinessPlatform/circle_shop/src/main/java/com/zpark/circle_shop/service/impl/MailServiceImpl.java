@@ -14,6 +14,9 @@ import org.thymeleaf.TemplateEngine;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author Celery
+ */
 @Service
 public class MailServiceImpl implements MailService {
 

@@ -1,6 +1,7 @@
 package com.zpark.circle_shop.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * 商品细节信息类
  */
 @Data
+@Accessors(chain = true)
 public class GoodsDetail implements Serializable {
 
     private Integer gdId;

@@ -29,13 +29,18 @@ new Vue({
                 data.append('password', this.user.password)
                 http.post('/api/user/login', data, { 'Content-Type': 'x-www-form-urlencoded;charset=utf-8' })
                     .then(resp => {
-                        let recentView = localStorage.getItem('recentView')
-                        if (recentView == undefined || recentView == '') {
-                            location.href = './index.html'
+                        if (resp.data.code == 1) {
+                            let recentView = localStorage.getItem('recentView')
+                            if (recentView == undefined || recentView == '') {
+                                location.href = './index.html'
+                            } else {
+                                localStorage.removeItem('recentView')
+                                location.href = recentView
+                            }
                         } else {
-                            localStorage.removeItem('recentView')
-                            location.href = recentView
+                            alert('用户名和密码错误！')
                         }
+                        
                     })
             }
         }

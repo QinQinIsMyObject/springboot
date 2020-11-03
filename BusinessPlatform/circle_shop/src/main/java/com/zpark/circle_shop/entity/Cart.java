@@ -1,10 +1,15 @@
 package com.zpark.circle_shop.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
+/**
+ * @author Celery
+ */
 @Data
+@Accessors(chain = true)
 public class Cart implements Serializable {
 
     private Integer cId;
