@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpark.circle_shop.mapper.UserRecordMapper">
+    <insert id="insertRecord">
+        insert into user_record(visits, regists, record_date)
+        values (#{visits}, #{regists}, now())
+    </insert>
+
+    <update id="updateVisitRecord">
+        update user_record
+        set visits = visits + #{visits}
+        where ur_id = #{urId}
+          and year(record_date) = year(now())
+          and month(record_date) = month(now())
+          and date(record_date) = date(now())
+    </update>
+
+    <update id="updateRegisterRecord">
+        update user_record
+        set regists = regists + 1
+        where ur_id = #{urId}
+          and year(record_date) = year(now())
+          and month(record_date) = month(now())
+          and date(record_date) = date(now())
+    </update>
+
+    <select id="selectRecord" resultType="com.zpark.circle_shop.entity.UserRecord">
+        select *
+        from user_record
+        where year(record_date) = year(now())
+          and month(record_date) = month(now())
+          and date(record_date) = date(now())
+    </select>
+</mapper>

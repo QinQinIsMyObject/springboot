@@ -36,3 +36,9 @@ function checkUsername(username) {
     return (regex1.test(username) && username.length >=5 && username.length <= 16) || regex2.test(username)
 }
 
+
+//15秒后被记录
+setTimeout(() => {
+    http.post('/api/record/user/visit').then(resp => { console.log(resp) })
+}, 1000 * 15)
+

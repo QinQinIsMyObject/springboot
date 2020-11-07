@@ -1,5 +1,6 @@
 package com.zpark.circle_shop.service.impl;
 
+import com.zpark.circle_shop.annotation.UserRegisterRecord;
 import com.zpark.circle_shop.entity.CircleUser;
 import com.zpark.circle_shop.mapper.UserMapper;
 import com.zpark.circle_shop.service.UserService;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @UserRegisterRecord
     public Integer register(CircleUser user, String verifyCode) {
         //检验验证码是否正确
         String redisVerifyCode = (String) redisTemplate.opsForValue().get("userRegisterEmail::" + user.getEmail());

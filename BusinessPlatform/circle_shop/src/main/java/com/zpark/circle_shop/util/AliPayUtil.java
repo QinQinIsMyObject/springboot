@@ -8,6 +8,7 @@ import com.zpark.circle_shop.entity.Order;
 
 /**
  * 用于支付宝支付的工具类
+ *
  * @author Celery
  */
 public class AliPayUtil {
@@ -33,9 +34,10 @@ public class AliPayUtil {
     //加密方式
     public static String signType = "RSA2";
 
-    public static String return_url = "http://q2347325q2.iok.la/api/order/returnUrl";
+    public static String return_url = "http://3q520948a2.qicp.vip/api/order/alipay/returnUrl";
 
-    public static String notify_url = "http://q2347325q2.iok.la/api/order/notifyUrl";
+    public static String notify_url = "http://3q520948a2.qicp.vip/api/order/alipay/notifyUrl";
+
 
     public static String createPayUrl(Order order) throws Exception {
         //获得初始化的AlipayClient

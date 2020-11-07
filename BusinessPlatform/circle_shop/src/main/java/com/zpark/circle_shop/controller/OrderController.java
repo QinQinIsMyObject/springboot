@@ -76,7 +76,7 @@ public class OrderController {
         return "success";
     }
 
-    @GetMapping("/returnUrl")
+    @GetMapping("/alipay/returnUrl")
     public Object returnUrl(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("进入同步回调...");
         //验签
@@ -85,7 +85,7 @@ public class OrderController {
         return redirect;
     }
 
-    @GetMapping("/getPayUrl")
+    @GetMapping("/alipay/getPayUrl")
     public Object getPayUrl(Order order, HttpServletResponse response) {
         String url = orderService.getPayUrl(order);
         System.out.println(order);

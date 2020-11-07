@@ -2,6 +2,7 @@ package com.zpark.circle_shop.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zpark.circle_shop.annotation.GoodsViewRecord;
 import com.zpark.circle_shop.entity.Goods;
 import com.zpark.circle_shop.entity.GoodsDetail;
 import com.zpark.circle_shop.mapper.GoodsMapper;
@@ -40,6 +41,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Cacheable(value = "goods", key = "#goods.gId")
+    @GoodsViewRecord
     public List<GoodsDetail> findGoodsById(Goods goods) {
         Integer state = goodsMapper.findGoodsById(goods).getState();
         if (state == 2) {

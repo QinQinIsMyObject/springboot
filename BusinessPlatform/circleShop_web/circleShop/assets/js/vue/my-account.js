@@ -1,3 +1,19 @@
+let getstate = function (state){
+    switch (state) {
+        case 0:
+            return '待支付'
+        case 1:
+            return '完成付款'
+        case 2:
+            return '完成订单'
+        case 3:
+            return '订单取消'
+        case 4:
+            return '其他状态'
+    }
+}
+
+
 new Vue({
     el: '#app',
     data() {
@@ -21,4 +37,7 @@ new Vue({
             location.href = './login.html'
         })
     },
+    filters: {
+        getstate 
+    }
 })

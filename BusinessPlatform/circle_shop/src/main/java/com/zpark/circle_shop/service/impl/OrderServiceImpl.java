@@ -1,5 +1,6 @@
 package com.zpark.circle_shop.service.impl;
 
+import com.zpark.circle_shop.annotation.GoodsDealRecord;
 import com.zpark.circle_shop.entity.Cart;
 import com.zpark.circle_shop.entity.CircleUser;
 import com.zpark.circle_shop.entity.GoodsDetail;
@@ -68,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 
         //计算总价 BigDecimal
         BigDecimal amount = new BigDecimal(c.getAmount() + "");
-        BigDecimal price = new BigDecimal(c.getPrice() + "");
+        BigDecimal price = new BigDecimal((c.getSpecial() == null ? c.getPrice() : c.getSpecial()) + "");
         BigDecimal totalPrice = amount.multiply(price).setScale(2, RoundingMode.HALF_UP);
 
         String orderNum = UUID.randomUUID().toString().replace("-", "").toUpperCase();
@@ -120,6 +121,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @GoodsDealRecord
     public Integer updateOrder(Order order) {
         return orderMapper.updateOrder(order);
     }

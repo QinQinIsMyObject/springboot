@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpark.circle_shop.mapper.GoodsRecordMapper">
+    <insert id="insertRecord">
+        insert into goods_record(g_id, views, deals, record_date)
+        values (#{gId}, #{views}, #{deals}, now())
+    </insert>
+
+    <update id="updateRecord">
+        update goods_record
+        set views = views + #{views},
+            deals = deals + #{deals}
+        where gr_id = #{grId}
+          and year(record_date) = year(now())
+          and month(record_date) = month(now())
+          and date(record_date) = date(now())
+    </update>
+
+    <select id="selectRecord" resultType="com.zpark.circle_shop.entity.GoodsRecord">
+        select *
+        from goods_record
+        where g_id = #{gId}
+          and year(record_date) = year(now())
+          and month(record_date) = month(now())
+          and date(record_date) = date(now())
+    </select>
+</mapper>
